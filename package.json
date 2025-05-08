@@ -1,0 +1,34 @@
+{
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/bun": "latest",
+		"@types/cors": "^2.8.18",
+		"@types/express": "^5.0.1",
+		"prisma": "^6.7.0",
+		"tsc": "^2.0.4",
+		"tsx": "^4.19.4",
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"@prisma/client": "^6.7.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.5.0",
+		"express": "^5.1.0"
+	},
+	"name": "angelsandvisitors",
+	"type": "module",
+	"private": true,
+	"scripts": {
+        "build": "bunx tsc --outDir dist",
+        "start": "node ./dist/server.js",
+
+		"dev": "bunx tsx --watch ./src/server.ts",
+
+		"check": "bunx biome check .",
+		"format": "bunx biome format . --write",
+		"apply": "bunx biome check . --apply"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	}
+}
