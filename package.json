@@ -13,17 +13,19 @@
 		"@prisma/client": "^6.7.0",
 		"cors": "^2.8.5",
 		"dotenv": "^16.5.0",
-		"express": "^5.1.0"
+		"express": "^5.1.0",
+		"zod": "^3.24.4"
 	},
 	"name": "angelsandvisitors",
+	"version": "0.0.1",
+	"description": "A simple web server for the Angels and Visitors project.",
+	"author": "Samuel, Nathan, e Vivian",
 	"type": "module",
 	"private": true,
 	"scripts": {
-        "build": "bunx tsc --outDir dist",
-        "start": "node ./dist/server.js",
-
+		"build": "bunx tsc --outDir dist",
+		"start": "node ./dist/server.js",
 		"dev": "bunx tsx --watch ./src/server.ts",
-
 		"check": "bunx biome check .",
 		"format": "bunx biome format . --write",
 		"apply": "bunx biome check . --apply"
