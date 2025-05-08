@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 const app = express();
 
-app.use(cors({ origin: process.env.FRONT_URL }));
+app.use(cors());
 app.use(json());
 
-app.listen(3333, () => console.log("Servidor Ligado!!!"));
+app.listen(3000, () => console.log("Servidor Ligado!!!"));
