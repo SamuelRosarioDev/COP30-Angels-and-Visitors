@@ -1,15 +1,26 @@
-import { prisma } from "../factories/prisma.factory";
 import type { CreateUsuarioDTO } from "../dtos/usuario.dto";
+import { prisma } from "../factories/prisma.factory";
 
-export const UsuarioRepository = {
-  create: (data: CreateUsuarioDTO) => prisma.usuario.create({ data }),
+export class UsuarioRepository {
+  constructor(private client = prisma.usuario) {}
 
-  findAll: () => prisma.usuario.findMany(),
+  async create(data: CreateUsuarioDTO) {
+    return this.client.create({ data });
+  }
 
-  findById: (id: number) => prisma.usuario.findUnique({ where: { id } }),
+  async findAll() {
+    return this.client.findMany();
+  }
 
-  update: (id: number, data: Partial<CreateUsuarioDTO>) =>
-    prisma.usuario.update({ where: { id }, data }),
+  async findById(id: number) {
+    return this.client.findUnique({ where: { id } });
+  }
 
-  delete: (id: number) => prisma.usuario.delete({ where: { id } }),
-};
+  async update(id: number, data: Partial<CreateUsuarioDTO>) {
+    return this.client.update({ where: { id }, data });
+  }
+
+  async delete(id: number) {
+    return this.client.delete({ where: { id } });
+  }
+}
