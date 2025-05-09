@@ -1,4 +1,3 @@
-// schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,55 +13,41 @@ enum TipoUsuario {
 }
 
 model Usuario {
-  id              Int            @id @default(autoincrement())
+  id              Int         @id @default(autoincrement())
   nome            String
-  email           String         @unique
+  email           String      @unique
   idioma          String?
   cidade          String?
   disponibilidade String?
   tipo            TipoUsuario
-  // Relacionamentos
-  comoAngel       Associacao[]   @relation("angelAssociations")
-  comoVisitor     Associacao?    @relation("visitorAssociations")
-  participacoesComoVisitor Participacao[] @relation("ParticipacoesComoVisitor")
-  participacoesComoAngel   Participacao[] @relation("ParticipacoesComoAngel")
-  
+
+  eventosCriados Evento[]       @relation("EventosCriados")
+  participacoes  Participacao[] @relation("ParticipacoesFeitas")
+
   @@map("usuarios")
 }
 
-model Associacao {
-  id         Int     @id @default(autoincrement())
-  id_visitor Int     @unique
-  id_angel   Int
-  // Relacionamentos
-  visitor    Usuario @relation("visitorAssociations", fields: [id_visitor], references: [id])
-  angel      Usuario @relation("angelAssociations", fields: [id_angel], references: [id])
-  
-  @@map("associacoes")
-}
-
 model Evento {
-  id             Int              @id @default(autoincrement())
-  nome           String
-  data           String           // formato ISO: YYYY-MM-DD
-  horario        String           // formato HH:MM
-  lugar          String
-  participacoes  Participacao[]
-  
+  id       Int    @id @default(autoincrement())
+  nome     String
+  data     String
+  horario  String
+  lugar    String
+  id_angel Int
+
+  criador       Usuario        @relation("EventosCriados", fields: [id_angel], references: [id])
+  participacoes Participacao[]
+
   @@map("eventos")
 }
 
 model Participacao {
-  id          Int     @id @default(autoincrement())
-  id_evento   Int
-  id_angel    Int
-  id_visitor  Int
-  // Relacionamentos
-  evento      Evento  @relation(fields: [id_evento], references: [id])
-  visitor     Usuario @relation("ParticipacoesComoVisitor", fields: [id_visitor], references: [id])
-  angel       Usuario @relation("ParticipacoesComoAngel", fields: [id_angel], references: [id])
+  id         Int @id @default(autoincrement())
+  id_evento  Int
+  id_visitor Int
 
-  
+  evento  Evento  @relation(fields: [id_evento], references: [id])
+  visitor Usuario @relation("ParticipacoesFeitas", fields: [id_visitor], references: [id])
+
   @@map("participacoes")
 }
-
